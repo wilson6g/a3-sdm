@@ -10,21 +10,9 @@ const { HttpStatus } = require("../../util/http-status");
 const {
   createStockUseCase,
   listAllStockUseCase,
-  productLowerStockUseCase,
+  deleteStockByIdUseCase,
+  updateStockByIdUseCase,
 } = require("../../useCase/stock-use-case");
-
-// stockRoutes.get("/product-lower-stock", async (request, response) => {
-//   try {
-//     const output = await productLowerStockUseCase();
-
-//     response.status(HttpStatus.OK).json(output);
-//   } catch (error) {
-//     console.log(error);
-//     response.status(error.status).json({
-//       error: error.message,
-//     });
-//   }
-// });
 
 stockRoutes.post("/stock", async (request, response) => {
   try {
@@ -62,15 +50,73 @@ stockRoutes.get("/stock", async (request, response) => {
 });
 
 stockRoutes.get("/stock/:id", async (request, response) => {
-  response.status(HttpStatus.OK).send("Hello world");
+  try {
+    const input = request.params;
+
+    const validGetStockByIdDto = getByIdStockController(input);
+
+    if (!validGetStockByIdDto) {
+      throw {
+        message: "Os dados de entrada não são válidos.",
+        status: HttpStatus.UNPROCESSABLE_ENTITY,
+      };
+    }
+
+    const output = await getByIdStockUseCase(validGetClientByIdDto);
+
+    response.status(HttpStatus.OK).json(output);
+  } catch (error) {
+    response.status(error.status).json({
+      error: error.message,
+    });
+  }
 });
 
 stockRoutes.put("/stock/:id", async (request, response) => {
-  response.status(HttpStatus.OK).send("Hello world");
+  try {
+    const input = { ...request.params, ...request.body };
+
+    const validUpdateStockByIdDto = updateStockController(input);
+
+    if (!validUpdateStockByIdDto) {
+      throw {
+        message: "Os dados de entrada não são válidos.",
+        status: HttpStatus.UNPROCESSABLE_ENTITY,
+      };
+    }
+
+    const output = await updateStockByIdUseCase(validUpdateStockByIdDto);
+
+    response.status(HttpStatus.OK).json(output);
+  } catch (error) {
+    response.status(error.status).json({
+      error: error.message,
+    });
+  }
 });
 
 stockRoutes.delete("/stock/:id", async (request, response) => {
-  response.status(HttpStatus.OK).send("Hello world");
+  try {
+    const input = request.params;
+
+    const validDeleteStockByIdDto = deleteStockController(input);
+
+    if (!validDeleteStockByIdDto) {
+      throw {
+        message: "Os dados de entrada não são válidos.",
+        status: HttpStatus.UNPROCESSABLE_ENTITY,
+      };
+    }
+
+    await deleteStockByIdUseCase(validDeleteStockByIdDto);
+
+    response.status(HttpStatus.NO_CONTENT).json();
+  } catch (error) {
+    console.log(error);
+    response.status(error.status).json({
+      error: error.message,
+    });
+  }
 });
 
 module.exports = { stockRoutes };

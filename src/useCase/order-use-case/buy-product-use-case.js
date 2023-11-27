@@ -2,13 +2,13 @@ const {
   getStockByIdRepository,
 } = require("../../framework-drivers/database/repository/stock-repository/get-stock-by-id-repository");
 const {
-  updateStockRepository,
+  updateStockByIdRepository,
 } = require("../../framework-drivers/database/repository/stock-repository/update-stock-repository");
 const { HttpStatus } = require("../../util/http-status");
 
 async function buyProductUseCase(order) {
   try {
-    const stockItem = await getStockByIdRepository(order.fk_stock);
+    const stockItem = await getStockByIdRepository({ id: order.fk_stock });
 
     if (!stockItem) {
       const error = new Error("Não existe esse produto no estoque.");
@@ -25,7 +25,7 @@ async function buyProductUseCase(order) {
         id: order.fk_stock,
       };
 
-      await updateStockRepository(stockItemRequestUpdate);
+      await updateStockByIdRepository(stockItemRequestUpdate);
     } else if (stockItem.quantity <= order.quantity) {
       const error = new Error(
         "Esse produto não está mais disponível em estoque."

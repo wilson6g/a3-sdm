@@ -1,6 +1,6 @@
 const database = require("../../config/database");
 
-async function updateStockRepository(stock) {
+async function updateStockByIdRepository(stock) {
   try {
     await database.query(
       "UPDATE stock SET quantity = ?, fk_product = ? WHERE id = ?",
@@ -8,7 +8,7 @@ async function updateStockRepository(stock) {
     );
 
     const addedStock = await database.query(
-      `SELECT stock.*,  product.name as product_name, product.value as product_value FROM stock LEFT JOIN product ON product.id = stock.fk_product WHERE stock.id = ?`,
+      `SELECT stock.*, product.name as product_name, product.value as product_value FROM stock LEFT JOIN product ON product.id = stock.fk_product WHERE stock.id = ?`,
       [stock.id]
     );
 
@@ -18,4 +18,4 @@ async function updateStockRepository(stock) {
   }
 }
 
-module.exports = { updateStockRepository };
+module.exports = { updateStockByIdRepository };

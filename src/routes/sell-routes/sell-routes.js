@@ -27,8 +27,6 @@ sellRoutes.get("/sell", async (request, response) => {
   }
 });
 
-
-
 sellRoutes.get("/sell/:id", async (request, response) => {
   response.status(HttpStatus.OK).send("Hello world");
 });

@@ -1,22 +1,22 @@
 const { validarUUID } = require("../../util/validar-uuid");
 const { HttpStatus } = require("../../util/http-status");
 
-function deleteStockController(input) {
+function averageClientConsumptionController(input) {
   if (Object.keys(input).length < 0) {
     throw {
       message: "Não foi recebido nenhum campo.",
       status: HttpStatus.UNPROCESSABLE_ENTITY,
     };
-  } else if (!validarUUID(input.id)) {
+  } else if (!validarUUID(input.fk_client)) {
     throw {
-      message: "O id não é valido, pois não é do tipo UUID.",
+      message: "O id do cliente não é valido, pois não é do tipo UUID.",
       status: HttpStatus.UNPROCESSABLE_ENTITY,
     };
   }
 
   return {
-    id: input.id,
+    fk_client: input.fk_client,
   };
 }
 
-module.exports = { deleteStockController };
+module.exports = { averageClientConsumptionController };

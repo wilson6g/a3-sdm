@@ -18,14 +18,14 @@ function updateStockController(input) {
       message: "O id do produto não é valido, pois não é do tipo UUID.",
       status: HttpStatus.UNPROCESSABLE_ENTITY,
     };
-  } else if (input.quantity) {
+  } else if (!input.quantity) {
     throw {
       message: "O campo quantidade não pode ser vazio.",
       status: HttpStatus.UNPROCESSABLE_ENTITY,
     };
-  } else if (input.quantity.length > 0) {
+  } else if (input.quantity <= 0) {
     throw {
-      message: "O campo quantidade não pode ser menor que zero.",
+      message: "O campo quantidade não pode ser menor ou igual a zero.",
       status: HttpStatus.UNPROCESSABLE_ENTITY,
     };
   } else if (typeof input.quantity != "number") {
