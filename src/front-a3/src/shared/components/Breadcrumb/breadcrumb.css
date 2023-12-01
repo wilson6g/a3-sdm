@@ -1,0 +1,9 @@
+.breadcrumb-container {
+    color: rgb(113, 113, 113);
+    font-size: 1rem;
+}
+
+.breadcrumb-negrito {
+    font-weight: bold;
+    font-size: 1rem;
+}

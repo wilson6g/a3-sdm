@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+* {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --gray-100: #e5e5e5;
+  --purple-500: #8459e3;
+  --font-family-primary: "Arial";
+}
+
+body {
+  background: var(--white);
+  font-family: var(--Arial);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Arial"
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Arial";
+
+  @media (max-width: 1180px) {
+    font-size: 92.75%;
+  }
+
+  @media (max-width: 720px) {
+    font-size: 87.5%;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: "Arial";
+}
+
+.rounded-border {
+  border-radius: 5px
+}
+
+.css-pdct74-MuiTablePagination-selectLabel p {
+  margin: 0 !important;
+}
+
+.css-levciy-MuiTablePagination-displayedRows p {
+  margin: 0 !important;
+}
+
+.text-primary {
+  color: #04047a !important;
+}
+
+.MuiTablePagination-toolbar p {
+  margin-top: 16px !important;
+}
+
+/* Webkit browsers */
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #fff;
+}
+
+/* Webkit browsers - thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #04047a;
+}
+
+/* Webkit browsers - thumb:hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #262626;
+}
+
+
+
+/* Firefox browsers */
+scrollbar {
+  width: 10px;
+  background-color: #fff;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

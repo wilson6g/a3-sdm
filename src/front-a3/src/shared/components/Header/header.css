@@ -1,0 +1,56 @@
+.MuiListItemButton-root {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.header-drawer,
+.MuiTypography-root.MuiListItemText-primary {
+    font-size: .8rem;
+}
+
+.red {
+    color: #ff0000;
+}
+
+/* .logo-iblue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 50px;
+} */
+
+.wrap-logo-header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    top: 0.3rem;
+    height: 66px;
+}
+
+.header-role {
+    color: #A1B0CB;
+}
+
+.blue-item-color {
+    color: #1223A3 !important;
+}
+
+.header-username {
+    color: #333333;
+}
+
+.header {
+    background-color: #FFFFFF !important;
+    margin: 0 !important;
+    color: #0A1561 !important;
+}
+
+.font-bold {
+    font-weight: 700 !important;
+}
+
+.MuiListItemText-root font-bold css-1w5nhgs-MuiListItemText-root > span {
+    font-weight: bold !important;
+}

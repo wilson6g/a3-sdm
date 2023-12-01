@@ -1,0 +1,12 @@
+.base-layout {
+    padding: 5rem 0rem;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.content {
+    width: 100%;
+    height: auto;
+}
