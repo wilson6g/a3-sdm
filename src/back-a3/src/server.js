@@ -1,8 +1,6 @@
 const express = require("express");
-const createDatabase =
-  require("./framework-drivers/database/config/init-database").createDatabase;
-const createTables =
-  require("./framework-drivers/database/config/init-database").createTables;
+const init =
+  require("./framework-drivers/database/config/init-database").init;
 const env = require("./framework-drivers/database/config/env-database-config");
 const { clientRoutes } = require("./routes/client-routes/client-routes");
 const cors = require("cors");
@@ -15,8 +13,7 @@ require("dotenv").config();
 
 (async () => {
   if (env.synchronize === true) {
-    await createDatabase();
-    await createTables();
+    await init();
   }
 })();
 
