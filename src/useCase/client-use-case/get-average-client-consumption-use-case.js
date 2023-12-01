@@ -57,7 +57,6 @@ async function getAverageClientConsumptionUseCase(input) {
       (a, b) => b.orderRequests - a.orderRequests
     );
 
-    // Cálculo do consumo médio por cliente
     const consumptionByClient = orderBestSellingProducts.reduce(
       (acc, product) => {
         const clientName = product.client_name;

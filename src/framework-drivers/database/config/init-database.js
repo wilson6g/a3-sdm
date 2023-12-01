@@ -24,15 +24,12 @@ async function createDatabase() {
   });
 
   try {
-    // Create a connection without specifying a database
     const connection = await poolWithoutDB.getConnection();
 
-    // Create the database
     await connection.query(
       `CREATE DATABASE IF NOT EXISTS \`${env.database}\`;`
     );
 
-    // Release the connection
     connection.release();
 
     console.log(`Database '${env.database}' created successfully.`);

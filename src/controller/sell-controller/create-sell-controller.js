@@ -23,7 +23,7 @@ function createSellController(input) {
       message: "O campo quantidade não pode ser vazio.",
       status: HttpStatus.UNPROCESSABLE_ENTITY,
     };
-  } else if (input.quantity.length <= 0) {
+  } else if (input.quantity <= 0) {
     throw {
       message: "O campo quantidade não pode ser menor ou igual a zero.",
       status: HttpStatus.UNPROCESSABLE_ENTITY,

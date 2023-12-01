@@ -21,4 +21,3 @@ async function query(sql, values) {
 }
 
 module.exports = { query };
-// module.exports = createConnection;

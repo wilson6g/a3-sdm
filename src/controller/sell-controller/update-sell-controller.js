@@ -1,6 +1,6 @@
-const { outputSellDto } = require("../../dto/sell-dto/output-sell-dto");
 const { validarUUID } = require("../../util/validar-uuid");
 const { HttpStatus } = require("../../util/http-status");
+const { inputSellUpdateDto } = require("../../dto/sell-dto/input-sell-update-dto");
 
 function updateSellController(input) {
   if (Object.keys(input).length < 0) {
@@ -24,12 +24,12 @@ function updateSellController(input) {
       message: "O id do estoque não é valido, pois não é do tipo UUID.",
       status: HttpStatus.UNPROCESSABLE_ENTITY,
     };
-  } else if (input.quantity) {
+  } else if (!input.quantity) {
     throw {
       message: "O campo quantidade não pode ser vazio.",
       status: HttpStatus.UNPROCESSABLE_ENTITY,
     };
-  } else if (input.quantity.length > 0) {
+  } else if (input.quantity <= 0) {
     throw {
       message: "O campo quantidade não pode ser menor ou igual a zero.",
       status: HttpStatus.UNPROCESSABLE_ENTITY,
@@ -41,7 +41,7 @@ function updateSellController(input) {
     };
   }
 
-  return outputSellDto(input);
+  return inputSellUpdateDto(input);
 }
 
 module.exports = { updateSellController };

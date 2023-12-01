@@ -13,6 +13,12 @@ const {
   listAllSellUseCase,
   bestSellingProductUseCase,
 } = require("../../useCase/sell-use-case");
+const {
+  updateSellByIdUseCase,
+} = require("../../useCase/sell-use-case/update-sell-by-id-use-case");
+const {
+  deleteSellByIdUseCase,
+} = require("../../useCase/sell-use-case/delete-sell-by-id-use-case");
 
 sellRoutes.get("/sell", async (request, response) => {
   try {
@@ -20,7 +26,7 @@ sellRoutes.get("/sell", async (request, response) => {
 
     response.status(HttpStatus.OK).json(output);
   } catch (error) {
-    console.log('error', error);
+    console.log("error", error);
     response.status(error.status).json({
       error: error.message,
     });
@@ -55,11 +61,51 @@ sellRoutes.post("/sell", async (request, response) => {
 });
 
 sellRoutes.put("/sell/:id", async (request, response) => {
-  response.status(HttpStatus.OK).send("Hello world");
+  try {
+    const input = { ...request.params, ...request.body };
+
+    const validUpdateStockByIdDto = updateSellController(input);
+
+    if (!validUpdateStockByIdDto) {
+      throw {
+        message: "Os dados de entrada não são válidos.",
+        status: HttpStatus.UNPROCESSABLE_ENTITY,
+      };
+    }
+
+    const output = await updateSellByIdUseCase(validUpdateStockByIdDto);
+
+    response.status(HttpStatus.OK).json(output);
+  } catch (error) {
+    console.log(error);
+    response.status(error.status).json({
+      error: error.message,
+    });
+  }
 });
 
 sellRoutes.delete("/sell/:id", async (request, response) => {
-  response.status(HttpStatus.OK).send("Hello world");
+  try {
+    const input = request.params;
+
+    const validDeleteStockByIdDto = deleteSellController(input);
+
+    if (!validDeleteStockByIdDto) {
+      throw {
+        message: "Os dados de entrada não são válidos.",
+        status: HttpStatus.UNPROCESSABLE_ENTITY,
+      };
+    }
+
+    await deleteSellByIdUseCase(validDeleteStockByIdDto);
+
+    response.status(HttpStatus.NO_CONTENT).json();
+  } catch (error) {
+    console.log(error);
+    response.status(error.status).json({
+      error: error.message,
+    });
+  }
 });
 
 module.exports = { sellRoutes };

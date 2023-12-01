@@ -7,5 +7,4 @@ module.exports = {
   database: process.env.DATABASE_NAME,
   synchronize: process.env.DATABASE_SYNCHRONIZE === 'true',
   database_port: parseInt(process.env.DATABASE_PORT) || 3306,
-
 };
