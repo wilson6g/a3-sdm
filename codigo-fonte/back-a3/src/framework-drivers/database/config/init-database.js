@@ -16,26 +16,46 @@ async function executeSQL(sql) {
 }
 
 async function createDatabase() {
-  const poolWithoutDB = mysql.createPool({
-    connectionLimit: 10,
-    host: env.host,
-    user: env.user,
-    password: env.password,
-  });
+  const maxRetries = 5; 
+  let connection = null;
 
-  try {
-    const connection = await poolWithoutDB.getConnection();
+  for (let i = 0; i <= maxRetries; i++) {
+    try {
+      const poolWithoutDB = mysql.createPool({
+      
+        connectionLimit: 10,
+        host: env.host,
+        user: env.user,
+        password: env.password,
+        port: env.port,
+      });
 
-    await connection.query(
-      `CREATE DATABASE IF NOT EXISTS \`${env.database}\`;`
-    );
+      connection = await poolWithoutDB.getConnection();
 
-    connection.release();
+      await connection.query(
+        `CREATE DATABASE IF NOT EXISTS \`${env.database}\`;`
+      );
 
-    console.log(`Database '${env.database}' created successfully.`);
-  } catch (error) {
-    console.error("Error creating database:", error);
+      connection.release();
+
+      console.log(`Database '${env.database}' created successfully.`);
+      break;
+    } catch (error) {
+      console.error("Error creating database:", error);
+      if (i === maxRetries) {
+        console.error("Maximum retries reached. Database creation failed.");
+      } else {
+        // Close the connection and retry after a delay
+        if (connection) connection.release();
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 2 seconds before retrying
+        console.log(
+          `Retrying database creation. Attempt ${i + 1} of ${maxRetries + 1}`
+        );
+      }
+    }
   }
+
+  return true;
 }
 
 async function createProducts() {
@@ -102,14 +122,15 @@ async function createClients() {
   }
 }
 
-
-
 async function init() {
   try {
-    await createDatabase();
-    await createTables();
-    await createProducts();
-    await createClients();
+    const createdDatabase = await createDatabase();
+
+    if(createdDatabase) {
+      await createTables();
+      await createProducts();
+      await createClients();
+    }
   } catch (error) {
     console.error("Erro ao inicializar o banco de dados:", error);
   }

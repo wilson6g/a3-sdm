@@ -1,0 +1,24 @@
+version: "3"
+services:
+  mysql-server:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    ports: # PORTA DA MÁQUINA LOCAL (ÚNICA QUE DEVE ALTERAR): PORTA DO CONTAINER
+      - "3308:3306"
+  sdm-api:
+    depends_on:
+      - mysql-server
+    build: .
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    environment:
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_SYNCHRONIZE: ${DATABASE_SYNCHRONIZE}
+      APP_PORT: ${APP_PORT}
+    stdin_open: true
+    tty: true
