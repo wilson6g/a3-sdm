@@ -1,7 +1,7 @@
 import { instance } from "../../axios/axios";
 
 export async function listStock() {
-  const response = await instance.get(`/Stock`);
+  const response = await instance.get(`/stock`);
 
   return response.data;
 }
