@@ -22,5 +22,11 @@ services:
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_SYNCHRONIZE: ${DATABASE_SYNCHRONIZE}
       APP_PORT: ${APP_PORT}
+    volumes:
+      - "./:/usr/app/"
+      - "exclude:/usr/app/node_modules/"
     stdin_open: true
     tty: true
+
+volumes:
+  exclude:
